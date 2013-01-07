@@ -28,35 +28,36 @@ Add one. It should live in your %HOME% directory (since Vista this has been
 C:\Users\YourName). Put this inside it, only change the file paths from the
 ones on my system to ones on yours:
 
-```
-# Optional: This tells Boost Build what compiler to use by default.
-#           Change it to "using gcc ;" if you want to use the normal
-#           MinGW compiler instead.
-using msvc
-  ;
+::
 
-# Tell Boost Build about our tool chain.
-using gcc
-   : dreamcast
-   # The path to the python script. Be aware Boost Build uses Linux style
-   # slashes.
-   : C:/Tools/KosW-Bjam/sh-elf-g++.py
-   : # <linker>/home/tim/Tools/dreamcast/KallistiOS/utils/gnu_wrappers/kos-ld
-     # The root directory of all the other bin scripts.
-     <root>C:/cygwin/opt/toolchains/dc/sh-elf/sh-elf/bin/
-     # C flags - these get passed when the compiler is invoked.
-     #           I stole this from $KOS_CFLAGS which is defined by
-     #           the environ.sh script the KOS docs ask you to write.
-     <cxxflags>"-O2 -fomit-frame-pointer -ml -m4-single-only -ffunction-sections -fdata-sections -I/home/Tim/Tools/dreamcast/KallistiOS/../kos-ports/include -I/home/Tim/Tools/dreamcast/KallistiOS/include -I/home/Tim/Tools/dreamcast/KallistiOS/kernel/arch/dreamcast/include -I/home/Tim/Tools/dreamcast/KallistiOS/addons/include -D_arch_dreamcast -D_arch_sub_pristine -Wall -g -fno-builtin -fno-strict-aliasing"
-     # Taken from $KOS_CPPFLAGS (modified a bit to allow for excetions
-     # and turn on C++11 support.
-     <cxxflags>"-DCOMPILE_TARGET_DREAMCAST -fno-operator-names -std=c++11"
-     # Taken from $KOS_LIBS
-     <linkflags>"-lstdc++ -Wl,--start-group -lkallisti -lc -lgcc -Wl,--end-group"
-     <linkflags>"-ml -m4-single-only -Wl,-Ttext=0x8c010000 -Wl,--gc-sections -T/home/Tim/Tools/dreamcast/KallistiOS/utils/ldscripts/shlelf.xc -nodefaultlibs -L/home/Tim/Tools/dreamcast/KallistiOS/lib/dreamcast -L/home/Tim/Tools/dreamcast/KallistiOS/addons/lib/dreamcast"
-     <archiver>"C:\\cygwin\\opt\\toolchains\\dc\\sh-elf\\sh-elf\\bin\\ar.exe"
-     <ranlib>"C:\\cygwin\\opt\\toolchains\\dc\\sh-elf\\sh-elf\\bin\\ranlib.exe"
-   ;
+    # Optional: This tells Boost Build what compiler to use by default.
+    #           Change it to "using gcc ;" if you want to use the normal
+    #           MinGW compiler instead.
+    using msvc
+      ;
+
+    # Tell Boost Build about our tool chain.
+    using gcc
+       : dreamcast
+       # The path to the python script. Be aware Boost Build uses Linux style
+       # slashes.
+       : C:/Tools/KosW-Bjam/sh-elf-g++.py
+       : # <linker>/home/tim/Tools/dreamcast/KallistiOS/utils/gnu_wrappers/kos-ld
+         # The root directory of all the other bin scripts.
+         <root>C:/cygwin/opt/toolchains/dc/sh-elf/sh-elf/bin/
+         # C flags - these get passed when the compiler is invoked.
+         #           I stole this from $KOS_CFLAGS which is defined by
+         #           the environ.sh script the KOS docs ask you to write.
+         <cxxflags>"-O2 -fomit-frame-pointer -ml -m4-single-only -ffunction-sections -fdata-sections -I/home/Tim/Tools/dreamcast/KallistiOS/../kos-ports/include -I/home/Tim/Tools/dreamcast/KallistiOS/include -I/home/Tim/Tools/dreamcast/KallistiOS/kernel/arch/dreamcast/include -I/home/Tim/Tools/dreamcast/KallistiOS/addons/include -D_arch_dreamcast -D_arch_sub_pristine -Wall -g -fno-builtin -fno-strict-aliasing"
+         # Taken from $KOS_CPPFLAGS (modified a bit to allow for excetions
+         # and turn on C++11 support.
+         <cxxflags>"-DCOMPILE_TARGET_DREAMCAST -fno-operator-names -std=c++11"
+         # Taken from $KOS_LIBS
+         <linkflags>"-lstdc++ -Wl,--start-group -lkallisti -lc -lgcc -Wl,--end-group"
+         <linkflags>"-ml -m4-single-only -Wl,-Ttext=0x8c010000 -Wl,--gc-sections -T/home/Tim/Tools/dreamcast/KallistiOS/utils/ldscripts/shlelf.xc -nodefaultlibs -L/home/Tim/Tools/dreamcast/KallistiOS/lib/dreamcast -L/home/Tim/Tools/dreamcast/KallistiOS/addons/lib/dreamcast"
+         <archiver>"C:\\cygwin\\opt\\toolchains\\dc\\sh-elf\\sh-elf\\bin\\ar.exe"
+         <ranlib>"C:\\cygwin\\opt\\toolchains\\dc\\sh-elf\\sh-elf\\bin\\ranlib.exe"
+       ;
 
 
 Now, to build with Boost Build, just add "--toolset=gcc-dreamcast" to the
