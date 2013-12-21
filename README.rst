@@ -15,13 +15,14 @@ First, make sure you have the Dreamcast toolchain set up on Windows and can
 at least use the makefiles in the Cygwin terminal to create Dreamcast
 executables.
 
-You'll need to make sure Python scripts can run without the .py extension;
-otherwise Boost Build won't be able to call the binary files it's looking for.
-
-Make sure your PATHEXT environment variable includes the .PY extensions.
-If it doesn't, you can add it with the following:
-
-SET PATHEXT=%PATHEXT%;.PY
+Next, you'll need to build the executable for the program sh-elf-g++.cpp.
+Before Boost Build would call Python just as easily as it could call an
+executable, but as of roughly version 1.55 bjam breaks if you specify a Python
+file. This executable will instead intercept the call and call the Python
+script for us. You can build it using Boost Build, or if you don't know that
+program just invoke your favorite C++ compiler from the command line. The
+important part is that you end up with a file named sh-elf-g++.exe in the same
+directory.
 
 Next, you'll need to edit your site-config.jam. Don't have a site-config.jam?
 Add one. It should live in your %HOME% directory (since Vista this has been
@@ -41,7 +42,7 @@ ones on my system to ones on yours:
        : dreamcast
        # The path to the python script. Be aware Boost Build uses Linux style
        # slashes.
-       : C:/Tools/KosW-Bjam/sh-elf-g++.py
+       : C:/Tools/KosW-Bjam/sh-elf-g++.exe
        : # <linker>/home/tim/Tools/dreamcast/KallistiOS/utils/gnu_wrappers/kos-ld
          # The root directory of all the other bin scripts.
          <root>C:/cygwin/opt/toolchains/dc/sh-elf/sh-elf/bin/

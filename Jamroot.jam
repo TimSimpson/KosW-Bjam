@@ -1,0 +1,7 @@
+exe sh-elf-g++
+    :   sh-elf-g++.cpp
+    ;
+
+install ./
+    :   sh-elf-g++
+    ;
